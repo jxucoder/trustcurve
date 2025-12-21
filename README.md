@@ -78,13 +78,44 @@ weights, ratios, strength = curvature_weights(y_train, y_proba)
 
 The Gini coefficient of the ratio distribution estimates noise prevalence. When noise is low, screening is gentle. When noise is high, screening is aggressive.
 
+## Benchmark Results
+
+On 17 datasets with known label noise (moderate/high):
+
+| Dataset | TrustCurve | XGBoost | Diff |
+|---------|------------|---------|------|
+| sonar | 0.897 | 0.857 | **+4.0%** |
+| diabetes | 0.751 | 0.734 | **+1.7%** |
+| madelon | 0.812 | 0.801 | **+1.0%** |
+| credit_approval | 0.872 | 0.862 | **+1.0%** |
+| adult | 0.872 | 0.868 | +0.4% |
+| satimage | 0.925 | 0.923 | +0.2% |
+| ozone | 0.944 | 0.943 | +0.1% |
+| steel_plates | 1.000 | 1.000 | 0.0% |
+| mushroom | 1.000 | 1.000 | 0.0% |
+| phoneme | 0.890 | 0.890 | 0.0% |
+| kr_vs_kp | 0.995 | 0.995 | 0.0% |
+| splice | 0.962 | 0.963 | -0.1% |
+| german_credit | 0.750 | 0.752 | -0.2% |
+| bank_marketing | 0.902 | 0.905 | -0.3% |
+| heart_disease | 0.765 | 0.790 | -2.5% |
+| letter | 0.933 | 0.963 | -3.0% |
+| electricity | 0.888 | 0.926 | -3.8% |
+
+TrustCurve helps most on smaller datasets with label noise. On large multiclass datasets (letter) or datasets with concept drift (electricity), the screening overhead can hurt.
+
 ## Running benchmarks
 
 ```bash
-python benchmarks/run_benchmark.py              # all benchmarks
-python benchmarks/run_benchmark.py --mode real  # real-world datasets only
-python benchmarks/run_benchmark.py --mode synthetic
+python benchmarks/run_benchmark.py --mode noisy      # datasets with known noise
+python benchmarks/run_benchmark.py --mode real       # all real-world datasets
+python benchmarks/run_benchmark.py --mode injected   # clean data + synthetic noise
+python benchmarks/run_benchmark.py --mode synthetic  # pure synthetic data
 ```
+
+## Limitations
+
+Assumes that confident predictions after warmup are correct. This can fail for underrepresented subgroups, insufficient warmup, or limited model capacity—where the model may be confidently wrong rather than the label being wrong.
 
 ## Development
 

@@ -369,6 +369,346 @@ def load_electricity() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
         return None, None, None
 
 
+def load_adult() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Adult Census Income - Self-reported income threshold, known noise."""
+    try:
+        data = fetch_openml(name="adult", version=2, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="adult",
+            description="Census income >50K (self-reported, noisy threshold)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.HIGH,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_sick() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Sick - Thyroid disease diagnosis with diagnostic uncertainty."""
+    try:
+        data = fetch_openml(name="sick", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="sick",
+            description="Thyroid sick diagnosis (diagnostic noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_hypothyroid() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Hypothyroid - Medical diagnosis with uncertainty."""
+    try:
+        data = fetch_openml(name="hypothyroid", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="hypothyroid",
+            description="Hypothyroid diagnosis (medical uncertainty)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_ozone() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Ozone Level - Environmental measurement noise."""
+    try:
+        data = fetch_openml(name="ozone-level-8hr", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="ozone",
+            description="Ozone level detection (measurement noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.HIGH,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_kc1() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """KC1 - Software defect prediction, known noisy labels."""
+    try:
+        data = fetch_openml(name="kc1", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="kc1",
+            description="Software defect prediction (noisy bug labels)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.HIGH,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_pc1() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """PC1 - Software defect prediction, known noisy labels."""
+    try:
+        data = fetch_openml(name="pc1", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="pc1",
+            description="Software defect prediction (noisy bug labels)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.HIGH,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_mozilla4() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Mozilla4 - Software defect prediction."""
+    try:
+        data = fetch_openml(name="Mozilla4", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="mozilla4",
+            description="Mozilla defect prediction (noisy labels)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.HIGH,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_jm1() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """JM1 - NASA software defect prediction, known noisy labels."""
+    try:
+        data = fetch_openml(name="jm1", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="jm1",
+            description="NASA software defect prediction (noisy bug labels)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.HIGH,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_blood_transfusion() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Blood Transfusion - Donation prediction with behavioral noise."""
+    try:
+        data = fetch_openml(name="blood-transfusion-service-center", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="blood_transfusion",
+            description="Blood donation prediction (behavioral noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_climate_crashes() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Climate Model Crashes - Simulation outcome prediction."""
+    try:
+        data = fetch_openml(name="climate-model-simulation-crashes", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="climate_crashes",
+            description="Climate model crash prediction",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_wilt() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Wilt - Diseased tree detection from satellite, annotation noise."""
+    try:
+        data = fetch_openml(name="wilt", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="wilt",
+            description="Diseased tree detection (satellite annotation noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_eeg_eye() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """EEG Eye State - Eye state from EEG, measurement noise."""
+    try:
+        data = fetch_openml(name="eeg-eye-state", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="eeg_eye",
+            description="Eye state from EEG signals (measurement noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_steel_plates() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Steel Plates Faults - Manufacturing defect detection."""
+    try:
+        data = fetch_openml(name="steel-plates-fault", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="steel_plates",
+            description="Steel plate fault detection (inspection noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=7,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_madelon() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Madelon - NIPS 2003 artificial dataset with noise."""
+    try:
+        data = fetch_openml(name="madelon", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="madelon",
+            description="Artificial dataset with probes and noise features",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_bank_marketing() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Bank Marketing - Term deposit subscription prediction."""
+    try:
+        data = fetch_openml(name="bank-marketing", version=1, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="bank_marketing",
+            description="Bank marketing campaign outcome (behavioral noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_satimage() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Satimage - Satellite image classification with boundary noise."""
+    try:
+        data = fetch_openml(data_id=182, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="satimage",
+            description="Satellite image land use (boundary annotation noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=6,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_splice() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Splice - DNA sequence classification."""
+    try:
+        data = fetch_openml(data_id=46, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="splice",
+            description="DNA splice junction classification",
+            n_samples=len(y), n_features=X.shape[1], n_classes=3,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_letter() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Letter - Letter recognition with annotation noise."""
+    try:
+        data = fetch_openml(data_id=6, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="letter",
+            description="Letter recognition (handwriting annotation noise)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=26,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_mushroom() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Mushroom - Edible vs poisonous classification."""
+    try:
+        data = fetch_openml(data_id=24, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="mushroom",
+            description="Mushroom edibility (some unknown labels)",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
+def load_kr_vs_kp() -> tuple[np.ndarray, np.ndarray, DatasetInfo]:
+    """Kr-vs-kp - Chess endgame classification."""
+    try:
+        data = fetch_openml(data_id=3, as_frame=True, parser='auto')
+        X, y = _preprocess(data.data, data.target)
+        info = DatasetInfo(
+            name="kr_vs_kp",
+            description="Chess King-Rook vs King-Pawn endgame",
+            n_samples=len(y), n_features=X.shape[1], n_classes=2,
+            noise_level=NoiseLevel.MODERATE,
+            source="openml"
+        )
+        return X, y, info
+    except Exception:
+        return None, None, None
+
+
 # =============================================================================
 # DATASET REGISTRY
 # =============================================================================
@@ -394,6 +734,28 @@ DATASET_LOADERS = {
     "phoneme": load_phoneme,
     "magic": load_magic,
     "electricity": load_electricity,
+    # Known noisy datasets
+    "adult": load_adult,
+    "sick": load_sick,
+    "hypothyroid": load_hypothyroid,
+    "ozone": load_ozone,
+    "kc1": load_kc1,
+    "pc1": load_pc1,
+    "mozilla4": load_mozilla4,
+    "jm1": load_jm1,
+    "blood_transfusion": load_blood_transfusion,
+    "climate_crashes": load_climate_crashes,
+    "wilt": load_wilt,
+    "eeg_eye": load_eeg_eye,
+    "steel_plates": load_steel_plates,
+    "madelon": load_madelon,
+    "bank_marketing": load_bank_marketing,
+    # More noisy datasets
+    "satimage": load_satimage,
+    "splice": load_splice,
+    "letter": load_letter,
+    "mushroom": load_mushroom,
+    "kr_vs_kp": load_kr_vs_kp,
 }
 
 

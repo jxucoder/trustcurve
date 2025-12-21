@@ -12,7 +12,7 @@ import argparse
 import warnings
 
 import numpy as np
-from datasets import DATASET_LOADERS, load_dataset
+from datasets import DATASET_LOADERS, NoiseLevel, load_dataset
 from evaluate import (
     BenchmarkResults,
     EvalResult,
@@ -90,6 +90,39 @@ def benchmark_with_noise(noise_levels=[0.0, 0.1, 0.2, 0.3], n_trials=5):
     return results
 
 
+def benchmark_noisy_datasets(n_trials=5):
+    """Benchmark on datasets with known label noise (MODERATE or HIGH)."""
+    print("\n" + "=" * 60)
+    print("DATASETS WITH KNOWN LABEL NOISE")
+    print("=" * 60)
+
+    results = BenchmarkResults()
+
+    for name in DATASET_LOADERS:
+        try:
+            X, y, info = load_dataset(name)
+            if X is None:
+                continue
+            if info.noise_level not in (NoiseLevel.MODERATE, NoiseLevel.HIGH):
+                continue
+
+            print(f"\n{name} [{info.noise_level.value}]: {info.n_samples} samples, {info.n_classes} classes")
+
+            r = evaluate_dataset(X, y, name, noise_levels=[0.0], n_trials=n_trials)
+            for res in r.results:
+                results.add(res)
+
+            tc = np.mean([x.accuracy for x in r.results if x.method == "trustcurve"])
+            bl = np.mean([x.accuracy for x in r.results if x.method == "baseline"])
+            print(f"  TC: {tc:.4f}, Base: {bl:.4f}, Diff: {tc-bl:+.4f}")
+
+        except Exception as e:
+            print(f"  ✗ {name}: {e}")
+
+    print_results(results, "NOISY DATASETS SUMMARY")
+    return results
+
+
 def benchmark_synthetic(noise_levels=[0.0, 0.05, 0.1, 0.2, 0.3], n_trials=5):
     """Benchmark on synthetic data."""
     print("\n" + "=" * 60)
@@ -134,7 +167,7 @@ def benchmark_synthetic(noise_levels=[0.0, 0.05, 0.1, 0.2, 0.3], n_trials=5):
 
 def main():
     parser = argparse.ArgumentParser(description="TrustCurve Benchmark")
-    parser.add_argument("--mode", choices=["all", "real", "noise", "synthetic"], default="all")
+    parser.add_argument("--mode", choices=["all", "real", "noisy", "injected", "synthetic"], default="all")
     parser.add_argument("--trials", type=int, default=5)
     args = parser.parse_args()
 
@@ -144,7 +177,9 @@ def main():
         benchmark_synthetic(n_trials=args.trials)
     elif args.mode == "real":
         benchmark_real_world(args.trials)
-    elif args.mode == "noise":
+    elif args.mode == "noisy":
+        benchmark_noisy_datasets(n_trials=args.trials)
+    elif args.mode == "injected":
         benchmark_with_noise(n_trials=args.trials)
     else:
         benchmark_synthetic(n_trials=args.trials)

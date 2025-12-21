@@ -57,6 +57,7 @@ weights = (1 - strength) * 1.0 + strength * raw_weights
 
 ## Limitations and Future Work
 
+- **Core assumption**: High confidence after warmup implies correct prediction. Fails when the model is confidently wrong due to underrepresented subgroups, insufficient warmup, or limited model capacity.
 - Currently only supports classification (binary and multiclass)
 - Single screening pass; iterative refinement may improve results
 - Tested primarily on tabular data
